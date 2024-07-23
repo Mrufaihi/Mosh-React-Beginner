@@ -1,11 +1,10 @@
 //import component(Fun) from its file
-import Message from './message';
-
+import ListGroup from './components/ListGroup';
 // new component
 function App() {
   return (
     <div>
-      <Message />
+      <ListGroup />
     </div>
   );
 }
