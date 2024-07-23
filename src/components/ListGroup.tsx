@@ -1,27 +1,24 @@
+//Imports
 import { func } from 'prop-types';
+import { MouseEvent } from 'react';
 
-//LIST GROUP COMPONENT
+//COMPONENT
 function ListGroup() {
+  //array
   let items = ['Tokyo', 'Saudi arabia', 'USA', 'Amesterdam'];
+  //Event Handler
+  const handleClick = (event: MouseEvent) => console.log('clicked.. ', event); //TS TypeAnnoation(type-note) | (:type)
+  // Mapping
   const mappedLists = items.map((item) => (
-    <li key={item}> {item} </li> //map each item between <li> element (also add unique key)
+    <li className="list-group-item" key={item} onClick={handleClick}>
+      {item}
+    </li>
   ));
-
+  // Conditional Rendering
   const ifEmpty = items.length === 0 && <p>Empty</p>; //.length (true) && <p>:Empty (truthy) | return 2nd
 
-  //#1   if (items.length === 0) {
-  //     return (
-  //       // any html +2 elements need to be wraped with fragment <>
-  //       <>
-  //         <h1>List Group</h1>
-  //         <p>Empty</p>
-  //       </>
-  //     );
-  //   }
-  //#2 (items.length === 0) ? <p>Empty array</p> : null;
-
+  // return statement
   return (
-    // only expression allowed inside
     <>
       <h1>List Group</h1>
       {ifEmpty}
@@ -30,4 +27,5 @@ function ListGroup() {
   );
 }
 
+// Export Component
 export default ListGroup;
