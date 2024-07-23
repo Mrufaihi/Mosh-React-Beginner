@@ -1,16 +1,27 @@
 //Imports
-import { func } from 'prop-types';
-import { MouseEvent } from 'react';
+import { useState } from 'react';
 
 //COMPONENT
 function ListGroup() {
-  //array
+  //Variables
   let items = ['Tokyo', 'Saudi arabia', 'USA', 'Amesterdam'];
+  // Hook: access built in features in React
+  // State Hook: tell React this Component State might Change
+  const [selectedIndex, setSelectedIndex] = useState(-1); //useState(init) = returns array[init V, updated V]
+
   //Event Handler
-  const handleClick = (event: MouseEvent) => console.log('clicked.. ', event); //TS TypeAnnoation(type-note) | (:type)
+
   // Mapping
-  const mappedLists = items.map((item) => (
-    <li className="list-group-item" key={item} onClick={handleClick}>
+  const mappedLists = items.map((item, index) => (
+    <li
+      className={
+        selectedIndex === index ? 'list-group-item active' : 'list-group-item'
+      }
+      key={item}
+      onClick={() => {
+        setSelectedIndex(index); //set selected -> index of current item
+      }}
+    >
       {item}
     </li>
   ));
