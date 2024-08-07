@@ -1,7 +1,12 @@
-//import component(Fun) from its file
-// new component
+//imports
+import Message from './components/Message';
+
 function App() {
-  return <></>;
+  return (
+    <>
+      <Message />
+    </>
+  );
 }
 
 // export App component(fun) to other files
