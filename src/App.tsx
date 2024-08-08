@@ -1,26 +1,13 @@
 //imports
-import ListGroup from './components/ListGroup';
+import Alert from './components/Alert';
 
 function App() {
-  const listCities = ['New Londo', 'Orlondo', 'Drake Valley', 'Undead Burge'];
-  const listCompanies = ['Apple', 'Goole', 'MicroCenter', 'Microsoft'];
   return (
-    <>
-      <ListGroup
-        listItem={listCities}
-        heading="Cities"
-        onHandleClick={(item) => {
-          console.log(item);
-        }}
-      />
-      <ListGroup
-        listItem={listCompanies}
-        heading="Companies"
-        onHandleClick={(item) => {
-          console.log(`${item} 2`);
-        }}
-      />
-    </>
+    //multiple Props with complex types
+    <Alert>
+      hi im here ed
+      <h1>Hi</h1>
+    </Alert>
   );
 }
 
