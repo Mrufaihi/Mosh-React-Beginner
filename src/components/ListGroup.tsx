@@ -5,10 +5,11 @@ import { useState } from 'react';
 interface Props {
   listItem: string[];
   heading: string;
+  onHandleClick: (item: string) => void;
 }
 
 //props -> {listItems, heading}
-function ListGroup({ listItem, heading }: Props) {
+function ListGroup({ listItem, heading, onHandleClick }: Props) {
   const [selectedIndex, setSelectedIndex] = useState(-1); //to control each item thro its index (-1 init)
 
   const listMapped = listItem.map((item: string, index: number) => {
@@ -18,7 +19,10 @@ function ListGroup({ listItem, heading }: Props) {
         className={
           selectedIndex === index ? 'list-group-item active' : 'list-group-item'
         }
-        onClick={() => setSelectedIndex(index)}
+        onClick={() => {
+          setSelectedIndex(index);
+          onHandleClick(item);
+        }}
       >
         {item}
       </li>
