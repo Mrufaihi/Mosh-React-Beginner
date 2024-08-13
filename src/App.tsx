@@ -1,25 +1,20 @@
 //imports
-
+import { useState } from 'react';
 import Alert from './components/Alert';
-import Button from './components/Button';
 
 function App() {
-  const hi = () => console.log('hi');
+  const [visible, setVisible] = useState(false);
+
+  const close = () => setVisible(false);
+
   return (
     <>
-      <Alert>Alert!</Alert>
+      {/* if true and truthy */}
+      {visible && <Alert onClose={close}>WEOOHOO!</Alert>}
 
-      <Button color="primary" onHandleClick={hi}>
-        HI CLICK
-      </Button>
-
-      <Button color="info" onHandleClick={hi}>
-        LOOL CLICK HERE!
-      </Button>
-
-      <Button color="warning" onHandleClick={hi}>
-        XD CLICK
-      </Button>
+      <button onClick={() => setVisible(true)} className="btn btn-primary">
+        Click- alert
+      </button>
     </>
   );
 }
