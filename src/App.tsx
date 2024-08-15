@@ -1,13 +1,12 @@
 //imports
 import { useState } from 'react';
-import ListGroup from './components/ListGroup'; //automatically looks for index.ts in that folder
 import './App.css';
+import { FaCalendarAlt } from 'react-icons/fa';
 
 function App() {
-  const listItems = ['California', 'New Londo', 'Jeddah'];
   return (
     <>
-      <ListGroup listItem={listItems} heading="Cities" />
+      <FaCalendarAlt color="red" size={50} />
     </>
   );
 }
