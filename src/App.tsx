@@ -1,20 +1,13 @@
 //imports
 import { useState } from 'react';
-import Alert from './components/Alert';
+import ListGroup from './components/ListGroup'; //automatically looks for index.ts in that folder
+import './App.css';
 
 function App() {
-  const [visible, setVisible] = useState(false);
-
-  const close = () => setVisible(false);
-
+  const listItems = ['California', 'New Londo', 'Jeddah'];
   return (
     <>
-      {/* if true and truthy */}
-      {visible && <Alert onClose={close}>WEOOHOO!</Alert>}
-
-      <button onClick={() => setVisible(true)} className="btn btn-primary">
-        Click- alert
-      </button>
+      <ListGroup listItem={listItems} heading="Cities" />
     </>
   );
 }

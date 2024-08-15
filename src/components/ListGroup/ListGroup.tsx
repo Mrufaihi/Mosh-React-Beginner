@@ -1,15 +1,16 @@
 //imports
 import { useState } from 'react';
+import styles from './ListGroup.module.css';
 
 // props Interface
 interface Props {
   listItem: string[];
   heading: string;
-  onHandleClick: (item: string) => void;
+  // onHandleClick: (item: string) => void;
 }
 
 //props -> {listItems, heading}
-function ListGroup({ listItem, heading, onHandleClick }: Props) {
+function ListGroup({ listItem, heading }: Props) {
   const [selectedIndex, setSelectedIndex] = useState(-1); //to control each item thro its index (-1 init)
 
   const listMapped = listItem.map((item: string, index: number) => {
@@ -21,7 +22,7 @@ function ListGroup({ listItem, heading, onHandleClick }: Props) {
         }
         onClick={() => {
           setSelectedIndex(index);
-          onHandleClick(item);
+          // onHandleClick(item);
         }}
       >
         {item}
@@ -32,7 +33,9 @@ function ListGroup({ listItem, heading, onHandleClick }: Props) {
   return (
     <>
       <h1>{heading}</h1>
-      <ul className="list-group">{listMapped}</ul>
+      <ul className={[styles.listGroup, styles.container].join(' ')}>
+        {listMapped}
+      </ul>
     </>
   );
 }
