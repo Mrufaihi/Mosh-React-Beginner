@@ -1,20 +1,9 @@
 //imports
 import { useState } from 'react';
 import './App.css';
-import Button from './components/Button';
-
+import Like from './components/Like';
 function App() {
-  return (
-    <>
-      <Button color="primary" onHandleClick={() => {}}>
-        Click
-      </Button>
-
-      <Button color="secondary" onHandleClick={() => {}}>
-        Click
-      </Button>
-    </>
-  );
+  return <Like onHandleClick={() => console.log('Clicked')} />;
 }
 
 // export App component(fun) to other files
