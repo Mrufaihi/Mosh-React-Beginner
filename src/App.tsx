@@ -1,12 +1,18 @@
 //imports
 import { useState } from 'react';
 import './App.css';
-import { FaCalendarAlt } from 'react-icons/fa';
+import Button from './components/Button';
 
 function App() {
   return (
     <>
-      <FaCalendarAlt color="red" size={50} />
+      <Button color="primary" onHandleClick={() => {}}>
+        Click
+      </Button>
+
+      <Button color="secondary" onHandleClick={() => {}}>
+        Click
+      </Button>
     </>
   );
 }

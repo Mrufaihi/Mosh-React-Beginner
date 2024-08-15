@@ -1,0 +1,19 @@
+.btn {
+  border: 0;
+  padding: 0.5rem;
+  border-radius: 10px;
+}
+
+.btn-primary {
+  background-color: aqua;
+  color: white;
+}
+.btn-primary:hover {
+  cursor: pointer;
+  background-color: hsl(180, 100%, 60%);
+}
+
+.btn-secondary {
+  background-color: orange;
+  color: black;
+}
