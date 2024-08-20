@@ -1,25 +1,20 @@
 //imports
-import { useState } from 'react';
 import './App.css';
-import { set } from 'immer/dist/internal';
+import Expandable from './components/Expandable/Expandable';
 
 function App() {
-  const [pizza, setPizza] = useState({
-    name: 'Pepporoni Pizza',
-    toppings: ['Pipporoni', 'Tomato'],
-  });
-
-  const handleClick = (topping: string) => {
-    setPizza({ ...pizza, toppings: [...pizza.toppings, topping] });
-  };
-
   return (
     <div>
-      <button onClick={() => handleClick('cheese')}>add Topping</button>
-      <p>{pizza.toppings.join('-')}</p>
+      <Expandable maxChars={20}>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates vel
+        reiciendis facere illum iste! Rem dolorum a dolore, dignissimos autem
+        itaque quasi cupiditate dicta repellendus eos repudiandae consequuntur
+        voluptatum minus. Rem blanditiis deserunt, molestias architecto unde
+        exercitationem provident doloremque quasi esse nesciunt vitae magni,
+        quaerat autem praesentium. Obcaecati, ipsum enim!
+      </Expandable>
     </div>
   );
 }
 
-// export App component(fun) to other files
 export default App;
