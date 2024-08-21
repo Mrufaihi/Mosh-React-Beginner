@@ -1,18 +1,26 @@
 //React hook FORM library for managing forms
 import { FieldValues, useForm } from 'react-hook-form';
+import { z } from 'zod'; //z is obj for scheme validation
+import { zodResolver } from '@hookform/resolvers/zod'; //Resolver
 
-interface FormData {
-  name: string;
-  age: number;
-}
+// interface FormData using Z
+type FormData = z.infer<typeof schema>; //refrenced schema we defined, used it as interface
+
+// schema for our validation in 1 place
+const schema = z.object({
+  name: z.string().min(3, { message: 'Name atleast 3 Letters' }), //custom error msg
+  age: z
+    .number({ invalid_type_error: 'Age Required!' }) //default is number is NaN when empty
+    .min(18, { message: 'Only 18+' }),
+});
 
 const Form = () => {
   // formState to show error messages
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>(); //pass Props to useForm (autoCompletetion)
+    formState: { errors, isValid }, //destructered for simplcity (isValid for submit)
+  } = useForm<FormData>({ resolver: zodResolver(schema) }); //set resolver to zod, attach schema too
 
   console.log(errors); //just for show
 
@@ -27,20 +35,14 @@ const Form = () => {
         </label>
         <input
           // after spread add validtion needed
-          {...register('name', { required: true, minLength: 3 })}
+          {...register('name')}
           id="name"
           type="text"
           className="form-control"
         />
 
-        {/* in errors if there is name? then access type */}
-        {errors.name?.type === 'required' && (
-          <p className="text-danger">Name Required!</p>
-        )}
-        {/*if type = minLength then show error msg*/}
-        {errors.name?.type === 'minLength' && (
-          <p className="text-danger">Atleast 3 Chars please!</p>
-        )}
+        {/* error Msg , no need for type. dynamic zod error messages*/}
+        {errors.name && <p className="text-danger">{errors.name.message}!</p>}
       </div>
 
       {/* Form Age */}
@@ -49,21 +51,20 @@ const Form = () => {
           AGE:
         </label>
         <input
-          {...register('age', { minLength: 2, required: true })}
+          {...register('age', { valueAsNumber: true })} //input by default-> value = string
           id="age"
           type="number"
           className="form-control"
         />
 
-        {/* error Msg */}
-        {errors.age?.type === 'required' && (
-          <p className="text-danger">Required Age!</p>
-        )}
-        {errors.age?.type === 'minLength' && (
-          <p className="text-danger"> 2 Digit Age please!</p>
-        )}
+        {/* error Msg , no need for type. dynamic zod error messages*/}
+        {errors.age && <p className="text-danger">{errors.age.message}</p>}
       </div>
-      <button className="btn btn-primary">Submit</button>
+
+      {/* submit btn, disabled if is Not Valid (there is errors) */}
+      <button disabled={!isValid} className="btn btn-primary">
+        Submit
+      </button>
     </form>
   );
 };
