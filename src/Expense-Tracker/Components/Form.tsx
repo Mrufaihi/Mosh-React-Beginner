@@ -2,21 +2,20 @@ import { z } from 'zod'; //zod the validation library
 import { zodResolver } from '@hookform/resolvers/zod'; //combine react Hooks with Zod (Resolver)
 import { FieldValues, useForm } from 'react-hook-form';
 import { useState } from 'react';
-<<<<<<< Updated upstream
 import { catagorySelect } from '../../App';
-=======
->>>>>>> Stashed changes
 
 const ShoppingCart = () => {
   // schema validation in 1 place
   const schema = z.object({
-    description: z.string().min(1, { message: 'Enter Description' }).min(3),
+    description: z
+      .string()
+      .min(1, { message: 'Description Required' })
+      .max(50, { message: 'Max 50' }),
     amount: z.number({ invalid_type_error: 'Set Amount' }),
-<<<<<<< Updated upstream
-    catagory: z.string().min(1, { message: 'Select Catagory' }), //TODO: fix catagory is empty error
-=======
-    catagory: z.string().min(1, { message: 'Enter Catagory' }),
->>>>>>> Stashed changes
+
+    catagory: z.enum(catagorySelect, {
+      errorMap: () => ({ message: 'Catagory Required' }),
+    }), //enum is any of selected values, needs to  be AS CONST.
   });
 
   // shape of our form taken from schema (hover FormData)
@@ -31,8 +30,7 @@ const ShoppingCart = () => {
   const onSubmit = (data: FieldValues) => console.log(data); //collect data from Form & do whatever
 
   const [item, setItem] = useState({});
-<<<<<<< Updated upstream
-
+  
   const [catagory, setCatagory] = useState(''); //TODO: this stores value of current catagory
 
   return (
@@ -74,7 +72,7 @@ const ShoppingCart = () => {
         <div>
           <label className=" p-1">Catagory</label>
           <select
-            {...register('catagory')} //TODO: this for schema register validation
+            {...register('catagory')} //TODO: Register Feilds for Schema  validation
             onChange={(e) => setCatagory(e.target.value)} //on change stores current value of catagory
             className="form-select"
             name=""

@@ -6,7 +6,7 @@ import Table from './Expense-Tracker/Components/Table';
 <<<<<<< Updated upstream
 
 // one place for all catagory, export to children
-export const catagorySelect = ['Meats', 'Dairy', 'Breads'];
+export const catagorySelect = ['Meats', 'Dairy', 'Breads'] as const;
 
 =======
 import Filter from './Expense-Tracker/Components/Filter';
