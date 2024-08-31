@@ -2,46 +2,55 @@ import { z } from 'zod'; // zod the validation library
 import { zodResolver } from '@hookform/resolvers/zod'; // combine react Hooks with Zod (Resolver)
 import { FieldValues, useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { categorySelect } from '../../App'; // Ensure this import is correct
+import categorySelect from '../../Catagory';
 
-const ShoppingCart = () => {
-  // schema validation in 1 place
-  const schema = z.object({
-    description: z
-      .string()
-      .min(1, { message: 'Description Required' })
-      .max(50, { message: 'Max 50' }),
-    amount: z.number({ invalid_type_error: 'Set Amount' }),
-    category: z.enum(categorySelect, {
-      errorMap: () => ({ message: 'Category Required' }),
-    }), // enum is any of selected values, needs to be AS CONST.
-  });
+// schema validation in 1 place
+const schema = z.object({
+  description: z
+    .string()
+    .min(1, { message: 'Description Required' })
+    .max(50, { message: 'Max 50' }),
+  amount: z.number({ invalid_type_error: 'Set Amount' }),
+  category: z.enum(categorySelect, {
+    errorMap: () => ({ message: 'Category Required' }),
+  }), // enum is any of selected values, needs to be AS CONST. (dont memories)
+});
 
-  // shape of our form taken from schema (hover FormData)
-  type FormData = z.infer<typeof schema>;
+// shape of our form taken from schema (hover ExpenseFormData)
+type ExpenseFormData = z.infer<typeof schema>;
 
+interface Props {
+  onSubmit: (data: ExpenseFormData) => void; //onSubmit that takes data of type ExpenseFormData (our schema)
+}
+
+const ShoppingCart = ({ onSubmit }: Props) => {
   // Form hook is react hook that got some functionalities like (register)
-  const { register, handleSubmit, formState, setValue } = useForm<FormData>({
-    // call resolver and combine form hook with it
-    resolver: zodResolver(schema), // give resolver our schema
-  }); // form hook
+  const { register, handleSubmit, formState, setValue, reset } =
+    useForm<ExpenseFormData>({
+      resolver: zodResolver(schema), // give resolver our schema
+    }); // form hook
 
-  const onSubmit = (data: FieldValues) => console.log(data); // collect data from Form & do whatever
+  // const onSubmit = (data: FieldValues) => console.log(data); // collect data from Form & do whatever
 
-  //just for category onChange to store the new value and remove error
+  //just for category onChange to store the new value and remove error TODO:(ReVisit later)
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedCategory = e.target.value as 'Meats' | 'Dairy' | 'Breads';
     setCategory(selectedCategory);
     setValue('category', selectedCategory); // Update the form value
   };
 
-  const [item, setItem] = useState({});
   const [category, setCategory] = useState(''); // this stores value of current category
 
   return (
     <>
       {/* search for item */}
-      <form className="m-4" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="m-4"
+        onSubmit={handleSubmit((data) => {
+          onSubmit(data);
+          reset(); //To clear form after submission
+        })}
+      >
         <div className="mb-3">
           <label htmlFor="Description" className="p-1">
             Description

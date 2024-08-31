@@ -4,9 +4,7 @@ import './App.css';
 import Form from './Expense-Tracker/Components/Form';
 import Table from './Expense-Tracker/Components/Table';
 import Filter from './Expense-Tracker/Components/Filter';
-
-// one place for all category, export to children
-export const categorySelect = ['Meats', 'Dairy', 'Breads'] as const;
+import categorySelect from './Catagory';
 
 function App() {
   const [shoppingItems, setShoppingItems] = useState([
@@ -28,7 +26,15 @@ function App() {
 
   return (
     <>
-      <Form></Form>
+      <Form
+        onSubmit={(newExpense) =>
+          // change state to add new expense, spread old array to copy it
+          setShoppingItems([
+            ...shoppingItems,
+            { ...newExpense, id: shoppingItems.length + 1 }, //calculate new id for this new expense
+          ])
+        }
+      ></Form>
       <Filter
         onFilter={(category) => {
           setSelectedCategory(category);
