@@ -15,7 +15,8 @@ const Filter = ({ onFilter }: Props) => {
         className="w-100 form-select"
         onChange={(e) => onFilter(e.target.value)}
       >
-        <option value="All">All</option>
+        {/* dont add value to All */}
+        <option value="">All</option>
         <option value="Dairy">Dairy</option>
         <option value="Meats">Meats</option>
         <option value="Breads">Breads</option>

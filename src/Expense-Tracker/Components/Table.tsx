@@ -6,7 +6,7 @@ import { useState } from 'react';
 interface Table {
   id: number;
   description: string;
-  catagory: string;
+  category: string;
   amount: number;
 }
 
@@ -17,8 +17,6 @@ interface Props {
 }
 
 function Table({ items, onDelete }: Props) {
-  // console.log(item);
-
   return (
     <>
       {/* table : we need this to be added dynamically after user fills search item form */}
@@ -38,7 +36,7 @@ function Table({ items, onDelete }: Props) {
             <tr key={item.id}>
               <td id="">{item.description}</td>
               <td id="">$ {item.amount}</td>
-              <td id="">{item.catagory}</td>
+              <td id="">{item.category}</td>
               <td>
                 <button
                   className="btn btn-outline-danger"
