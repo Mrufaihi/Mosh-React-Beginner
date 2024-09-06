@@ -1,53 +1,35 @@
 //imports
-import { useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import './App.css';
-import Form from './Expense-Tracker/Components/Form';
-import Table from './Expense-Tracker/Components/Table';
-import Filter from './Expense-Tracker/Components/Filter';
-import categorySelect from './Catagory';
+
+//type safety&autoCompletion for what we want to use | then insert inside <>
+interface UserData {
+  id: number;
+  name: string;
+}
 
 function App() {
-  const [shoppingItems, setShoppingItems] = useState([
-    { id: 1, description: 'aaa', category: 'Meats', amount: 10 },
-    { id: 2, description: 'bbb', category: 'Dairy', amount: 15 },
-    { id: 3, description: 'ccc', category: 'Dairy', amount: 15 },
-  ]);
+  const [users, setUsers] = useState<UserData[]>([]); //to avoid 'never'
 
-  const [selectedCategory, setSelectedCategory] = useState(''); // Category init empty
+  useEffect(() => {
+    //fetch info from server
+    axios
+      .get<UserData[]>('https://jsonplaceholder.typicode.com/users') //may take some time (promise)
+      .then((response) => setUsers(response.data)); //after promised response is received
+  }, []); // cause we setState, must avoid infnite loop
 
-  // Return to this Const filtered if Category was Selected : Else no Selection return full list
-  const filteredCategory =
-    selectedCategory.length > 0
-      ? shoppingItems.filter((e) => e.category === selectedCategory)
-      : shoppingItems;
-
-  // when no item is found then empty table
-  if (shoppingItems.length === 0) return null;
+  console.log(users);
 
   return (
     <>
-      <Form
-        onSubmit={(newExpense) =>
-          // change state to add new expense, spread old array to copy it
-          setShoppingItems([
-            ...shoppingItems,
-            { ...newExpense, id: shoppingItems.length + 1 }, //calculate new id for this new expense
-          ])
-        }
-      ></Form>
-      <Filter
-        onFilter={(category) => {
-          setSelectedCategory(category);
-        }}
-      ></Filter>
-      <Table
-        items={filteredCategory}
-        // onDelete has id args, when btn is clicked current element id is stored.
-        onDelete={
-          (id) =>
-            setShoppingItems(shoppingItems.filter((item) => item.id !== id)) // item.id is in every object
-        }
-      ></Table>
+      <ul>
+        {users.map((user) => (
+          <li key={user.id}>
+            {user.name}: {user.id}
+          </li>
+        ))}
+      </ul>
     </>
   );
 }
